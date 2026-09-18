@@ -75,7 +75,7 @@ app = FastAPI(title="PRISM API")
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key= 2WKKnfXtBUhCCuptlfx7l5ED-QGIC1GfOHMDzkM2QLvJG2pIAqLBsBsL4bEGTZb3,
+    secret_key=os.getenv("2WKKnfXtBUhCCuptlfx7l5ED-QGIC1GfOHMDzkM2QLvJG2pIAqLBsBsL4bEGTZb3"),
 )
 
 
