@@ -48,6 +48,7 @@ load_dotenv()
 GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
 GITHUB_REDIRECT_URI = os.getenv("GITHUB_REDIRECT_URI")
+FRONTEND_URL = os.getenv("FRONTEND_URL")
 
 SESSION_SECRET = os.getenv(
     "SESSION_SECRET",
@@ -66,7 +67,11 @@ Base.metadata.create_all(bind=engine)
 # APP
 # ==================================================
 
-app = FastAPI(title="PRISM API")
+app = FastAPI(
+    title="PRISM API",
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
 
 
 # ==================================================
@@ -75,9 +80,8 @@ app = FastAPI(title="PRISM API")
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key=os.getenv("2WKKnfXtBUhCCuptlfx7l5ED-QGIC1GfOHMDzkM2QLvJG2pIAqLBsBsL4bEGTZb3"),
+    secret_key=SESSION_SECRET,
 )
-
 
 # ==================================================
 # CORS
@@ -88,13 +92,12 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
-        os.getenv("https://prism-armaan-b5da.vercel.app"),
+        FRONTEND_URL,
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # ==================================================
 # REQUEST MODELS
