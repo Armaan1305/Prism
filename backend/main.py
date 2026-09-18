@@ -75,7 +75,7 @@ app = FastAPI(title="PRISM API")
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key=SESSION_SECRET,
+    secret_key= 2WKKnfXtBUhCCuptlfx7l5ED-QGIC1GfOHMDzkM2QLvJG2pIAqLBsBsL4bEGTZb3,
 )
 
 
@@ -88,6 +88,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        os.getenv("https://prism-armaan-b5da.vercel.app"),
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -1094,7 +1095,7 @@ def github_callback(
     request.session["user_id"] = user_id
 
     return RedirectResponse(
-        url="http://localhost:3000/dashboard"
+        url=f"{FRONTEND_URL}/dashboard"
     )
 
 
