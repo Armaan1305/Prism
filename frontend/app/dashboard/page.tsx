@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ImpactGraph from "@/components/ImpactGraph";
 import AnalysisHistory from "@/components/AnalysisHistory";
+import { API_URL } from "@/lib/api";
 
 type User = {
   id: number;
@@ -246,7 +247,7 @@ export default function DashboardPage() {
         setError("");
 
         const authResponse = await fetch(
-          "http://localhost:8000/auth/me",
+          `${API_URL}/auth/me`,
           {
             credentials: "include",
           }
@@ -274,7 +275,7 @@ export default function DashboardPage() {
           authData.user.github_login;
 
         const repoResponse = await fetch(
-          `http://localhost:8000/github/repositories/${encodeURIComponent(
+          `${API_URL}/github/repositories/${encodeURIComponent(
             githubLogin
           )}`,
           {
@@ -340,7 +341,7 @@ export default function DashboardPage() {
         user.github_login;
 
       const response = await fetch(
-        `http://localhost:8000/github/pull-requests/${encodeURIComponent(
+        `${API_URL}/github/pull-requests/${encodeURIComponent(
           githubLogin
         )}/${encodeURIComponent(repoName)}`,
         {
@@ -399,11 +400,9 @@ export default function DashboardPage() {
         user.github_login;
 
       const response = await fetch(
-        `http://localhost:8000/github/analyze-pr/${prNumber}?owner=${encodeURIComponent(
+        `${API_URL}/github/analyze-pr/${prNumber}?owner=${encodeURIComponent(
           githubLogin
-        )}&repo=${encodeURIComponent(
-          selectedRepo
-        )}`,
+        )}&repo=${encodeURIComponent(selectedRepo)}`,
         {
           method: "POST",
           credentials: "include",
@@ -494,7 +493,7 @@ export default function DashboardPage() {
           </p>
 
           <a
-            href="http://localhost:8000/auth/github"
+            href={`${API_URL}/auth/github`}
             className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-zinc-200"
           >
             Continue with GitHub
@@ -906,7 +905,6 @@ export default function DashboardPage() {
 
             {/* ANALYSIS HEADER */}
             <div className="rounded-3xl border border-white/10 bg-zinc-950 p-7 shadow-2xl sm:p-10">
-
               <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
 
                 <div className="min-w-0">

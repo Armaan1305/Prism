@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import ImpactGraph from "@/components/ImpactGraph";
+import { API_URL } from "@/lib/api";
 
 type AnalysisData = {
   file: string;
@@ -82,7 +83,7 @@ export default function AnalysisPage() {
       try {
         // Get logged-in user
         const userResponse = await fetch(
-          "http://localhost:8000/auth/me",
+          `${API_URL}/auth/me`,
           {
             credentials: "include",
           }
@@ -103,7 +104,7 @@ export default function AnalysisPage() {
 
         // Fetch saved analysis
         const response = await fetch(
-          `http://localhost:8000/history/${encodeURIComponent(
+          `${API_URL}/history/${encodeURIComponent(
             githubLogin
           )}/${id}`,
           {

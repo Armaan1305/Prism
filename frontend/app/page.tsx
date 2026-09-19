@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ImpactGraph from "@/components/ImpactGraph";
 import AnalysisHistory from "@/components/AnalysisHistory";
+import { API_URL } from "@/lib/api";
 
 type User = {
   github_login: string;
@@ -495,7 +496,7 @@ export default function DashboardPage() {
         setError("");
 
         const response = await fetch(
-          "http://localhost:8000/auth/me",
+          `${API_URL}/auth/me`,
           {
             credentials: "include",
           }
@@ -556,7 +557,7 @@ useEffect(() => {
       setError("");
 
       const response = await fetch(
-        `http://localhost:8000/github/repositories/${encodeURIComponent(
+        `${API_URL}/github/repositories/${encodeURIComponent(
           githubLogin
         )}`,
         {
@@ -622,7 +623,7 @@ useEffect(() => {
       setAnalysisResult(null);
 
       const response = await fetch(
-        `http://localhost:8000/github/pull-requests/${encodeURIComponent(
+        `${API_URL}/github/pull-requests/${encodeURIComponent(
           githubLogin
         )}/${encodeURIComponent(repository)}`,
         {
@@ -705,7 +706,7 @@ useEffect(() => {
       setAnalysisResult(null);
 
       const response = await fetch(
-        `http://localhost:8000/github/analyze-pr/${encodeURIComponent(
+        `${API_URL}/github/analyze-pr/${encodeURIComponent(
           selectedPR
         )}?owner=${encodeURIComponent(
           user.github_login

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/api";
 
 type HistoryItem = {
   id: number;
@@ -33,7 +34,7 @@ export default function AnalysisHistory({
     async function loadHistory() {
       try {
         const response = await fetch(
-          `http://localhost:8000/history/${encodeURIComponent(githubLogin)}`,
+          `${API_URL}/history/${encodeURIComponent(githubLogin)}`,
           {
             credentials: "include",
           }

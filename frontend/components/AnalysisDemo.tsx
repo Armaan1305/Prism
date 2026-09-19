@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ImpactGraph from "./ImpactGraph";
+import { API_URL } from "@/lib/api";
 
 type Repository = {
   name: string;
@@ -96,7 +97,7 @@ export default function AnalysisDemo() {
     async function checkAuthentication() {
       try {
         const response = await fetch(
-          "http://localhost:8000/auth/me",
+          `${API_URL}/auth/me`,
           {
             credentials: "include",
           }
@@ -135,7 +136,7 @@ export default function AnalysisDemo() {
 
   try {
     const response = await fetch(
-      `http://localhost:8000/github/repositories/${currentUser.github_login}`,
+      `${API_URL}/github/repositories/${currentUser.github_login}`,
       {
         credentials: "include",
       }
@@ -176,7 +177,7 @@ export default function AnalysisDemo() {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/github/pull-requests/${currentUser.github_login}/${repo}`,
+        `${API_URL}/github/pull-requests/${currentUser.github_login}/${repo}`,
         {
           credentials: "include",
         }
@@ -206,7 +207,9 @@ export default function AnalysisDemo() {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/github/analyze-pr/${selectedPR}?owner=${currentUser.github_login}&repo=${selectedRepo}`,
+       `${API_URL}/github/analyze-pr/${selectedPR}?owner=${encodeURIComponent(
+         currentUser.github_login
+       )}&repo=${encodeURIComponent(selectedRepo)}`,
         {
           method: "POST",
           credentials: "include",
